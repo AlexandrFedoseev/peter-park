@@ -7,7 +7,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'peter-park',
+    title: 'Parking Manager Dashboard',
     htmlAttrs: {
       lang: 'en'
     },

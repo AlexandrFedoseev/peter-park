@@ -1,0 +1,26 @@
+.form
+    h2 Create New Item
+    .content
+        Input(
+            title="License Plate*:",
+            type="text"
+        )
+        Input(
+            title="Country*:",
+            type="text"
+        )
+        Input(
+            title="Start Date",
+            type="text"
+        )
+        Input(
+            title="End Date",
+            type="text"
+        )
+        Input(
+            title="Owner's Name:",
+            type="text"
+        )
+        button.btn(
+            @click="decrement"
+        ) Create
