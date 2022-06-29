@@ -1,5 +1,5 @@
 
-v-container.form(fluid): v-row
+v-container.form(fluid): v-form: v-row
     v-col(
         class="d-flex",
         cols="12",
@@ -8,6 +8,7 @@ v-container.form(fluid): v-row
         v-text-field(
             label="License Plate",
             :rules="licensePlateRules",
+            v-model="licensePlate",
             hide-details="auto"
         )
     v-col(
@@ -17,8 +18,9 @@ v-container.form(fluid): v-row
     )
         v-select(
             :items="countriesList",
-            :rules="licensePlateRules",
-            label="Country"
+            :rules="required",
+            label="Country",
+            v-model="country"
         )
     v-col(
         class="d-flex",
@@ -27,7 +29,8 @@ v-container.form(fluid): v-row
     )
         v-text-field(
             label="Name of the Owner",
-            hide-details="auto"
+            hide-details="auto",
+            v-model="ownerName"
         )
     v-col(
         class="d-flex",
@@ -47,10 +50,8 @@ v-container.form(fluid): v-row
                 v-text-field(
                     v-model="dateRangeText"
                     label="Dates"
-                    persistent-hint
                     prepend-icon="mdi-calendar"
                     v-bind="attrs"
-                    @blur="date = parseDate(dateFormatted)"
                     v-on="on"
                 )
             v-date-picker(
@@ -67,7 +68,7 @@ v-container.form(fluid): v-row
                     depressed
                     large
                     color="deep-orange"
-                    @click="isDatePicker = false, dates = []"
+                    @click="cancelDatePicker(), isDatePicker = false, dates = []"
                 ) cancel
     v-col(
         class="d-flex",
@@ -79,4 +80,5 @@ v-container.form(fluid): v-row
             block
             large
             color="primary"
+             @click="sendData()"
         ) Add
