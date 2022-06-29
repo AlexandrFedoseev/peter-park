@@ -3,6 +3,7 @@
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { AgGridVue } from "ag-grid-vue"; // the AG Grid Vue Component
+import CheckboxCellRenderer from "./checkbox-cell-renderer.vue";
 
 import "ag-grid-community/dist/styles/ag-grid.css"; // Core grid CSS, always needed
 import "ag-grid-community/dist/styles/ag-theme-alpine.css"; // Optional theme CSS
@@ -38,7 +39,7 @@ export default class Grid extends Vue {
         console.warn("invalid filter type " + filter)
         return false
     }
-  };
+  }
 
   private dateComparator = (filterLocalDateAtMidnight, cellValue) => {
     const dateAsString = cellValue;
@@ -57,12 +58,16 @@ export default class Grid extends Vue {
 
     // Now that both parameters are Date objects, we can compare
     if (cellDate < filterLocalDateAtMidnight) {
-      return -1;
+      return -1
     } else if (cellDate > filterLocalDateAtMidnight) {
-      return 1;
+      return 1
     }
-    return 0;
-  };
+    return 0
+  }
+
+    public defaultColDef = {
+        resizable: true,
+    };
 
   public columnDefs = [
     {
@@ -117,7 +122,16 @@ export default class Grid extends Vue {
     {
         field: "enabled",
         sortable: true,
-        cellStyle: {"font-weight": 'bold', 'line-height': '30px'}
+        cellStyle: {"font-weight": 'bold', 'line-height': '30px', "text-align": "right"},
+        width: 90,
+    },
+    {
+        field: "enabled",
+        headerName: "",
+        cellRenderer: 'checkboxRenderer',
+        cellStyle: {"padding": '0', "padding-left": "10px"},
+        resizable: false,
+        width: 45
     },
   ];
   public rowData = [
@@ -147,8 +161,12 @@ export default class Grid extends Vue {
     },
   ];
 
+    public frameworkComponents = {
+        checkboxRenderer: CheckboxCellRenderer
+    };
+
   mounted() {
-    console.log("mounted grid");
+        
   }
 
   public rowStyle = { height: '30px' };

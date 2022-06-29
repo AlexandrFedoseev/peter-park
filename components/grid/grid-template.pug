@@ -1,7 +1,9 @@
 v-container.grid(fluid)
     ag-grid-vue.grid__wrap(
         class="ag-theme-alpine"
-        :rowHeight="30"
+        :rowHeight="35"
         :columnDefs="columnDefs"
         :rowData="rowData"
+        :frameworkComponents="frameworkComponents"
+        :defaultColDef="defaultColDef"
     )
