@@ -1,102 +1,82 @@
-div
-    v-container(fluid)
-        v-row
-            v-col(
-                class="d-flex",
-                cols="12",
-                sm="4"
-            )
+
+v-container.form(fluid): v-row
+    v-col(
+        class="d-flex",
+        cols="12",
+        sm="2"
+    )
+        v-text-field(
+            label="License Plate",
+            :rules="licensePlateRules",
+            hide-details="auto"
+        )
+    v-col(
+        class="d-flex",
+        cols="12",
+        sm="2"
+    )
+        v-select(
+            :items="countriesList",
+            :rules="licensePlateRules",
+            label="Country"
+        )
+    v-col(
+        class="d-flex",
+        cols="12",
+        sm="3"
+    )
+        v-text-field(
+            label="Name of the Owner",
+            hide-details="auto"
+        )
+    v-col(
+        class="d-flex",
+        cols="12",
+        sm="3"
+    )
+        v-menu(
+            ref="isDatePicker"
+            v-model="isDatePicker"
+            :close-on-content-click="false"
+            transition="scale-transition"
+            offset-y
+            max-width="290px"
+            min-width="auto"
+        )
+            template(v-slot:activator="{ on, attrs }")
                 v-text-field(
-                    label="License Plate",
-                    :rules="licensePlateRules",
-                    hide-details="auto"
+                    v-model="dateRangeText"
+                    label="Dates"
+                    persistent-hint
+                    prepend-icon="mdi-calendar"
+                    v-bind="attrs"
+                    @blur="date = parseDate(dateFormatted)"
+                    v-on="on"
                 )
-            v-col(
-                class="d-flex",
-                cols="12",
-                sm="4"
-            )
-                v-select(
-                    :items="countriesList",
-                    :rules="licensePlateRules",
-                    label="Country"
-                )
-            v-col(
-                class="d-flex",
-                cols="12",
-                sm="4"
-            )
-                v-text-field(
-                    label="Name of the Owner",
-                    hide-details="auto"
-                )
-            v-col(
-                class="d-flex",
-                cols="12",
-                sm="4"
-            )
-                v-menu(
-                    ref="menu1"
-                    v-model="menu1"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="290px"
-                    min-width="auto"
-                )
-                    template(v-slot:activator="{ on, attrs }")
-                        v-text-field(
-                            v-model="dateFormatted"
-                            label="Start Date"
-                            hint="MM/DD/YYYY format"
-                            persistent-hint
-                            prepend-icon="mdi-calendar"
-                            v-bind="attrs"
-                            @blur="date = parseDate(dateFormatted)"
-                            v-on="on"
-                        )
-                    v-date-picker(
-                        v-model="date"
-                        no-title
-                        @input="menu1 = false"
-                    )
-            v-col(
-                class="d-flex",
-                cols="12",
-                sm="4"
-            )
-                v-menu(
-                    ref="menu1"
-                    v-model="menu1"
-                    :close-on-content-click="false"
-                    transition="scale-transition"
-                    offset-y
-                    max-width="290px"
-                    min-width="auto"
-                )
-                    template(v-slot:activator="{ on, attrs }")
-                        v-text-field(
-                            v-model="dateFormatted"
-                            label="End Date"
-                            hint="MM/DD/YYYY format"
-                            persistent-hint
-                            prepend-icon="mdi-calendar"
-                            v-bind="attrs"
-                            @blur="date = parseDate(dateFormatted)"
-                            v-on="on"
-                        )
-                    v-date-picker(
-                        v-model="date"
-                        no-title
-                        @input="menu1 = false"
-                    )
-            v-col(
-                class="d-flex",
-                cols="12",
-                sm="4"
+            v-date-picker(
+                v-model="dates"
+                range
             )
                 v-btn(
                     depressed
                     large
                     color="primary"
-                ) Add New License
+                    @click="isDatePicker = false"
+                ) confirm
+                v-btn(
+                    depressed
+                    large
+                    color="deep-orange"
+                    @click="isDatePicker = false, dates = []"
+                ) cancel
+    v-col(
+        class="d-flex",
+        cols="12",
+        sm="2"
+    )
+        v-btn(
+            depressed
+            block
+            large
+            color="primary"
+        ) Add
