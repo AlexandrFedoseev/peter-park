@@ -1,5 +1,5 @@
 <style lang="scss" src="./form-styles.scss" />
-<template  lang="pug" src="./form-template.pug" />
+<template lang="pug" src="./form-template.pug" />
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import Input from "@/components/input/Input.vue"
@@ -10,12 +10,17 @@ import Input from "@/components/input/Input.vue"
     }
 })
 export default class Form extends Vue {
-  mounted() {
-    console.log('mounted form')
-  }
+    mounted() {
+        console.log('mounted form')
+    }
+
+    public licensePlateRules = [
+        value => !!value || 'Required.',
+        value => (value && value.length >= 3) || 'Min 3 characters',
+    ]
+
+    public countriesList = [
+        'Germany', 'Switzerland', 'Austria', 'France'
+    ]
 }
-
-
-
-
 </script>
