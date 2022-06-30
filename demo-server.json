@@ -42,7 +42,7 @@
       "owner": "Malte Klapper",
       "startDate": "08/01/2022",
       "endDate": "09/01/2022",
-      "enabled": true,
+      "enabled": false,
       "id": 6
     },
     {
@@ -53,6 +53,60 @@
       "endDate": "09/17/2025",
       "enabled": true,
       "id": 7
+    },
+    {
+      "licensePlate": "AA-567-OO",
+      "country": "France",
+      "owner": "Vita Kozlovska",
+      "startDate": "06/30/2022",
+      "endDate": "05/01/2023",
+      "enabled": true,
+      "id": 8
+    },
+    {
+      "licensePlate": "DA-3964",
+      "country": "Austria",
+      "owner": "Daniela Borkowski",
+      "startDate": "",
+      "endDate": "",
+      "enabled": true,
+      "id": 9
+    },
+    {
+      "licensePlate": "KL-999H",
+      "country": "Germany",
+      "owner": "Stefan Sanner",
+      "startDate": "06/30/2022",
+      "endDate": "07/01/2022",
+      "enabled": true,
+      "id": 10
+    },
+    {
+      "licensePlate": "MM-3223",
+      "country": "Switzerland",
+      "owner": "Tim Schuchert",
+      "startDate": "07/06/2022",
+      "endDate": "09/03/2022",
+      "enabled": true,
+      "id": 11
+    },
+    {
+      "licensePlate": "BBQ-O 12",
+      "country": "Germany",
+      "owner": "Doğa Mine Taçalan",
+      "startDate": "05/01/2022",
+      "endDate": "05/06/2022",
+      "enabled": true,
+      "id": 12
+    },
+    {
+      "licensePlate": "PP-871-JA",
+      "country": "France",
+      "owner": "Jawad Abu Zakhem",
+      "startDate": "06/16/2022",
+      "endDate": "06/30/2022",
+      "enabled": true,
+      "id": 13
     }
   ]
 }

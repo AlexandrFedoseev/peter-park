@@ -1,14 +1,14 @@
 
 
-<style lang="scss" src="./grid-styles.scss" />
+<style lang="scss" src="./grid-styles.scss"></style>
 <template lang="pug" src="./grid-template.pug" />
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
 import { AgGridVue } from "ag-grid-vue";
 import CheckboxCellRenderer from "./checkbox-cell-renderer.vue";
 import { textMatcher, dateComparator } from "./grid-utils";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { GridApi } from "ag-grid-community";
+import { runInThisContext } from "vm";
 
 @Component({
     components: {
@@ -18,6 +18,8 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 export default class Grid extends Vue {
     defaultColDef = {
         resizable: true,
+        suppressNavigable: true,
+        cellClass: 'no-border'
     };
 
     columnDefs = [
@@ -88,7 +90,10 @@ export default class Grid extends Vue {
     rowData: any[] = [];
 
     addData(row) {
-        this.rowData.push(row)
+        this.rowData.push(row);
+        setTimeout(() => {
+            this.setRowSelected(row);
+        })
     }
 
     frameworkComponents = {
@@ -99,6 +104,25 @@ export default class Grid extends Vue {
 
     mounted() {
         this.getContracts();
+    }
+
+    gridApi!: GridApi;
+
+    onGridReady(params) {
+        this.gridApi = params.api;
+    }
+
+    onRowClicked({ node }) {
+        node.setSelected(true);
+    }
+
+    setRowSelected(row) {
+        this.gridApi.forEachNode((node) => {
+            if (node.data.id === row.id) {
+                node.setSelected(true);
+                this.gridApi.ensureNodeVisible(node)
+            }
+        });
     }
 
     private async getContracts() {
