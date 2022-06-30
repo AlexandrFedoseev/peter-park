@@ -107,6 +107,42 @@
       "endDate": "06/30/2022",
       "enabled": true,
       "id": 13
+    },
+    {
+      "licensePlate": "JAN-56",
+      "country": "Germany",
+      "owner": "Janine Janer",
+      "startDate": "06/02/2022",
+      "endDate": "07/02/2022",
+      "enabled": true,
+      "id": 14
+    },
+    {
+      "licensePlate": "MO-7284",
+      "country": "Austria",
+      "owner": "Marco Michelutto",
+      "startDate": "06/03/2022",
+      "endDate": "07/02/2022",
+      "enabled": true,
+      "id": 15
+    },
+    {
+      "licensePlate": "PTR-S 88",
+      "country": "Germany",
+      "owner": "Peter Sabath",
+      "startDate": "06/01/2022",
+      "endDate": "06/09/2022",
+      "enabled": true,
+      "id": 16
+    },
+    {
+      "licensePlate": "KKA-R 45",
+      "country": "Germany",
+      "owner": "Karsten Feyerabend",
+      "startDate": "07/01/2022",
+      "endDate": "09/02/2022",
+      "enabled": true,
+      "id": 17
     }
   ]
 }

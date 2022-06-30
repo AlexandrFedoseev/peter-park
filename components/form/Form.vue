@@ -37,7 +37,7 @@ export default class Form extends Vue {
 
     @Emit("new-contract")
     updateGrid(data) {
-        this.resetFormData();
+        this.$refs.form.reset();
         return data;
     }
 
@@ -63,6 +63,7 @@ export default class Form extends Vue {
     }
 
     validateLicensePlate(value: string): boolean | string {
+        if(!this.country) { return ""; }
         return LICENSE_PLATE_VALIDATOR[this.country].test(value) || "License Plate is not Valid.";
     }
 
@@ -86,6 +87,10 @@ export default class Form extends Vue {
         return this.dates.map(this.formatDate).join(' ~ ');
     }
 
+    set dateRangeText(value) {
+        
+    }
+
     dateRangeValues(str: string): string {
         // dateRangeValues getter
         return "";
@@ -93,14 +98,6 @@ export default class Form extends Vue {
     private async addContract(contract) {
         const data = await this.$http.$post("http://localhost:3001/contracts", contract);
         this.updateGrid(data);
-    }
-
-    private resetFormData() {
-        this.isFormValid = true;
-        this.dates = [];
-        this.country = 'Germany';
-        this.licensePlate = "";
-        this.ownerName = "";
     }
 }
 </script>
