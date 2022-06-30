@@ -24,5 +24,4 @@ export default class Header extends Vue {
     }
     debounceInput = debounce(this.onInput, 500);
 }
-
 </script>

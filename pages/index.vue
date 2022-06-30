@@ -1,5 +1,3 @@
-
-
 <style lang="scss" src="./index-styles.scss" />
 <template  lang="pug" src="./index-template.pug" />
 <script lang="ts">
