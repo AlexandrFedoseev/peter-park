@@ -72,21 +72,9 @@ export default class Grid extends Vue {
         },
         {
             field: "enabled",
-            sortable: true,
-            cellStyle: {
-                "font-weight": "bold",
-                "line-height": "30px",
-                "text-align": "right",
-            },
-            width: 90
-        },
-        {
-            field: "enabled",
-            headerName: "",
             cellRenderer: "checkboxRenderer",
             cellStyle: { padding: "0", "padding-left": "10px" },
-            resizable: false,
-            width: 45
+            sortable: true
         }
     ];
     rowData: any[] = [];
