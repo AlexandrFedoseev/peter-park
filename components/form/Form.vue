@@ -4,6 +4,7 @@
 import { Vue, Component, Emit } from "vue-property-decorator";
 import Input from "@/components/input/Input.vue";
 import { dateComparator } from "./form-utils";
+import { Contract } from "@/types/Contract.type";
 const LICENSE_PLATE_VALIDATOR = {
     Germany: new RegExp("[A-ZÄÖÜ]{1,3}\-[A-Z]{0,2}[ ]{0,1}[0-9]{1,4}[0-9]{0}[H]{0,1}$"),
     Switzerland: new RegExp("[A-Z]{1,3}\-[0-9]{1,6}$"),
@@ -24,7 +25,7 @@ export default class Form extends Vue {
     isFormValid = true;
     isDatePicker = false;
     dates: string[] = [];
-    country = "";
+    country: "Germany" | "Switzerland" | "Austria" | "France" | "" = "";
     countriesList = ['Germany', 'Switzerland', 'Austria', 'France'];
     countryRules = [
         this.validateRequired
@@ -36,14 +37,28 @@ export default class Form extends Vue {
     ];
     ownerName = "";
 
+    get dateRangeText(): string {
+        if (!this.dates.length) return "";
+        if (this.dates.length === 2 && dateComparator(this.dates[0], this.dates[1]) === -1) { 
+            this.dates.reverse();
+        }
+        return this.dates.map(this.formatDate).join(' ~ ');
+    }
+
+    set dateRangeText(value) {
+        // Fixes Date Picker input
+    }
+
     @Emit("new-contract")
-    updateGrid(data) {
+    updateGrid(data: Contract): Contract {
         this.$refs.form.reset();
+        // Fixes Date Picker menu unaffected by form reset
         this.dates = [];
         return data;
     }
 
     onCountryChange() {
+        // Enforces License Plate revalidation
         this.$refs.form.validate();
     }
 
@@ -85,24 +100,8 @@ export default class Form extends Vue {
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
 
-    get dateRangeText(): string {
-        if (!this.dates.length) return "";
-        if (this.dates.length === 2 && dateComparator(this.dates[0], this.dates[1]) === -1) { 
-            this.dates.reverse();
-        }
-        return this.dates.map(this.formatDate).join(' ~ ');
-    }
-
-    set dateRangeText(value) {
-        
-    }
-
-    dateRangeValues(str: string): string {
-        // dateRangeValues getter
-        return "";
-    }
-    private async addContract(contract) {
-        const data = await this.$http.$post("http://localhost:3001/contracts", contract);
+    private async addContract(contract: Contract) {
+        const data: Contract = await this.$http.$post("http://localhost:3001/contracts", contract);
         this.updateGrid(data);
     }
 }
