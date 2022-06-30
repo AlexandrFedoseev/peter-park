@@ -30,17 +30,17 @@ export function dateComparator(filterLocalDateAtMidnight: Date, cellValue: strin
         return 0;
     }
     // In the application, dates are stored as mm/dd/yyyy
-    const dateParts = dateAsString.split("/")
-    const day = Number(dateParts[1])
-    const month = Number(dateParts[0]) - 1
-    const year = Number(dateParts[2])
-    const cellDate = new Date(year, month, day)
+    const dateParts = dateAsString.split("/");
+    const day = Number(dateParts[1]);
+    const month = Number(dateParts[0]) - 1;
+    const year = Number(dateParts[2]);
+    const cellDate = new Date(year, month, day);
     if (cellDate < filterLocalDateAtMidnight) {
-        return -1
+        return -1;
     } else if (cellDate > filterLocalDateAtMidnight) {
-        return 1
+        return 1;
     }
-    return 0
+    return 0;
 }
 const GridUtils = {
     textMatcher, dateComparator

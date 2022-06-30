@@ -3,6 +3,7 @@
 <script lang="ts">
 import { Vue, Component, Emit } from "vue-property-decorator";
 import Input from "@/components/input/Input.vue";
+import { dateComparator } from "./form-utils";
 const LICENSE_PLATE_VALIDATOR = {
     Germany: new RegExp("[A-ZÄÖÜ]{1,3}\-[A-Z]{0,2}[ ]{0,1}[0-9]{1,4}[0-9]{0}[H]{0,1}$"),
     Switzerland: new RegExp("[A-Z]{1,3}\-[0-9]{1,6}$"),
@@ -22,7 +23,7 @@ export default class Form extends Vue {
 
     isFormValid = true;
     isDatePicker = false;
-    dates = [];
+    dates: string[] = [];
     country = "";
     countriesList = ['Germany', 'Switzerland', 'Austria', 'France'];
     countryRules = [
@@ -78,6 +79,12 @@ export default class Form extends Vue {
         return `${month}/${day}/${year}`;
     }
 
+    startEndDateNormalize() {
+        if (this.dates.length !== 2) return;
+
+        this.dates
+    }
+
     parseDate(date: string | null): string | null {
         if (!date) return null;
         const [month, day, year] = date.split('/');
@@ -85,6 +92,10 @@ export default class Form extends Vue {
     }
 
     get dateRangeText(): string {
+        if (!this.dates.length) return "";
+        if (this.dates.length === 2 && dateComparator(this.dates[0], this.dates[1]) === -1) { 
+            this.dates.reverse();
+        }
         return this.dates.map(this.formatDate).join(' ~ ');
     }
 
