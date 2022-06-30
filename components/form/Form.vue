@@ -79,12 +79,6 @@ export default class Form extends Vue {
         return `${month}/${day}/${year}`;
     }
 
-    startEndDateNormalize() {
-        if (this.dates.length !== 2) return;
-
-        this.dates
-    }
-
     parseDate(date: string | null): string | null {
         if (!date) return null;
         const [month, day, year] = date.split('/');

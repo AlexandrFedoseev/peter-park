@@ -6,6 +6,9 @@
 # install dependencies
 $ yarn install
 
+# start demo-server at localhost:3001
+$ yarn server
+
 # serve with hot reload at localhost:3000
 $ yarn dev
 
