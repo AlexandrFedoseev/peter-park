@@ -1,84 +1,92 @@
 
-v-container.form(fluid): v-form: v-row
-    v-col(
-        class="d-flex",
-        cols="12",
-        sm="2"
+v-container.form(fluid)
+    v-form(
+        ref="form",
+        v-model="isFormValid",
+        lazy-validation
     )
-        v-text-field(
-            label="License Plate",
-            :rules="licensePlateRules",
-            v-model="licensePlate",
-            hide-details="auto"
-        )
-    v-col(
-        class="d-flex",
-        cols="12",
-        sm="2"
-    )
-        v-select(
-            :items="countriesList",
-            :rules="required",
-            label="Country",
-            v-model="country"
-        )
-    v-col(
-        class="d-flex",
-        cols="12",
-        sm="3"
-    )
-        v-text-field(
-            label="Name of the Owner",
-            hide-details="auto",
-            v-model="ownerName"
-        )
-    v-col(
-        class="d-flex",
-        cols="12",
-        sm="3"
-    )
-        v-menu(
-            ref="isDatePicker"
-            v-model="isDatePicker"
-            :close-on-content-click="false"
-            transition="scale-transition"
-            offset-y
-            max-width="290px"
-            min-width="auto"
-        )
-            template(v-slot:activator="{ on, attrs }")
+        v-row
+            v-col(
+                class="d-flex",
+                cols="12",
+                sm="2"
+            )
                 v-text-field(
-                    v-model="dateRangeText"
-                    label="Dates"
-                    prepend-icon="mdi-calendar"
-                    v-bind="attrs"
-                    v-on="on"
+                    label="License Plate",
+                    :rules="licensePlateRules",
+                    v-model="licensePlate",
+                    hide-details="auto"
                 )
-            v-date-picker(
-                v-model="dates"
-                range
+            v-col(
+                class="d-flex",
+                cols="12",
+                sm="2"
+            )
+                v-select(
+                    :items="countriesList",
+                    :rules="required",
+                    label="Country",
+                    v-model="country"
+                    @input="onCountryChange"
+                )
+            v-col(
+                class="d-flex",
+                cols="12",
+                sm="3"
+            )
+                v-text-field(
+                    label="Name of the Owner",
+                    hide-details="auto",
+                    v-model="ownerName"
+                )
+            v-col(
+                class="d-flex",
+                cols="12",
+                sm="3"
+            )
+                v-menu(
+                    ref="isDatePicker",
+                    v-model="isDatePicker",
+                    :close-on-content-click="false",
+                    transition="scale-transition",
+                    offset-y,
+                    max-width="290px",
+                    min-width="auto"
+                )
+                    template(v-slot:activator="{ on, attrs }")
+                        v-text-field(
+                            v-model="dateRangeText",
+                            label="Dates",
+                            prepend-icon="mdi-calendar",
+                            v-bind="attrs",
+                            v-on="on"
+                        )
+                    v-date-picker(
+                        v-model="dates",
+                        range
+                    )
+                        v-btn(
+                            depressed,
+                            large,
+                            color="primary",
+                            @click="isDatePicker = false",
+                        ) Confirm
+                        v-btn(
+                            depressed,
+                            large,
+                            color="deep-orange",
+                            @click="cancelDatePicker(), isDatePicker = false, dates = []"
+                        ) Cancel
+            v-col(
+                class="d-flex",
+                cols="12",
+                sm="2"
             )
                 v-btn(
-                    depressed
-                    large
-                    color="primary"
-                    @click="isDatePicker = false"
-                ) confirm
-                v-btn(
-                    depressed
-                    large
-                    color="deep-orange"
-                    @click="cancelDatePicker(), isDatePicker = false, dates = []"
-                ) cancel
-    v-col(
-        class="d-flex",
-        cols="12",
-        sm="2"
-    )
-        v-btn(
-            depressed
-            block
-            large
-            color="primary"
-             @click="sendData()"
-        ) Add
+                    depressed,
+                    :disabled="!isFormValid",
+                    block,
+                    large,
+                    color="primary",
+                    @click="sendData()"
+                ) Add

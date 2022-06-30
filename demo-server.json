@@ -1,0 +1,67 @@
+{
+  "contracts": [
+    {
+      "id": 0,
+      "licensePlate": "HRO-D 819",
+      "country": "Germany",
+      "owner": "Nico Probst",
+      "startDate": "03/03/2022",
+      "endDate": "09/12/2022",
+      "enabled": true
+    },
+    {
+      "id": 1,
+      "licensePlate": "FRW-J 274",
+      "country": "Germany",
+      "owner": "Carsten Schroeder",
+      "startDate": "04/05/2022",
+      "endDate": "06/30/2022",
+      "enabled": true
+    },
+    {
+      "id": 3,
+      "licensePlate": "PI-MM 119",
+      "country": "Germany",
+      "owner": "Jonas Frenz",
+      "startDate": "06/29/2022",
+      "endDate": "07/01/2022",
+      "enabled": true
+    },
+    {
+      "licensePlate": "AA-123-XS",
+      "country": "France",
+      "owner": "Daniela Borkowski",
+      "startDate": "06/30/2022",
+      "endDate": "07/07/2022",
+      "enabled": true,
+      "id": 4
+    },
+    {
+      "licensePlate": "AA-333-QW",
+      "country": "France",
+      "owner": "Mel Taylor",
+      "startDate": "06/30/2022",
+      "endDate": "",
+      "enabled": true,
+      "id": 5
+    },
+    {
+      "licensePlate": "AU-83742",
+      "country": "Austria",
+      "owner": "Malte Klapper",
+      "startDate": "08/01/2022",
+      "endDate": "09/01/2022",
+      "enabled": true,
+      "id": 6
+    },
+    {
+      "licensePlate": "MMZ-233344",
+      "country": "Switzerland",
+      "owner": "Omar Alejandro Ruiz Ramos",
+      "startDate": "06/09/2022",
+      "endDate": "09/17/2025",
+      "enabled": true,
+      "id": 7
+    }
+  ]
+}
