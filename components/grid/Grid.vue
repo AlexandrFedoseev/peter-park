@@ -8,7 +8,6 @@ import { AgGridVue } from "ag-grid-vue";
 import CheckboxCellRenderer from "./checkbox-cell-renderer.vue";
 import { textMatcher, dateComparator } from "./grid-utils";
 import { GridApi } from "ag-grid-community";
-import { runInThisContext } from "vm";
 
 @Component({
     components: {
@@ -30,7 +29,7 @@ export default class Grid extends Vue {
             filter: "agTextColumnFilter",
             filterParams: {
                 textMatcher,
-            },
+            }
         },
         {
             field: "country",
@@ -39,7 +38,7 @@ export default class Grid extends Vue {
             filterParams: {
                 textMatcher,
             },
-            cellStyle: { "line-height": "30px" },
+            cellStyle: { "line-height": "30px" }
         },
         {
             field: "owner",
@@ -48,7 +47,7 @@ export default class Grid extends Vue {
             filterParams: {
                 textMatcher,
             },
-            cellStyle: { "line-height": "30px" },
+            cellStyle: { "line-height": "30px" }
         },
         {
             field: "startDate",
@@ -57,7 +56,7 @@ export default class Grid extends Vue {
             filterParams: {
                 comparator: dateComparator,
             },
-            cellStyle: { "line-height": "30px" },
+            cellStyle: { "line-height": "30px" }
         },
         {
             field: "endDate",
@@ -66,7 +65,7 @@ export default class Grid extends Vue {
             filterParams: {
                 comparator: dateComparator,
             },
-            cellStyle: { "line-height": "30px" },
+            cellStyle: { "line-height": "30px" }
         },
         {
             field: "enabled",
@@ -76,7 +75,7 @@ export default class Grid extends Vue {
                 "line-height": "30px",
                 "text-align": "right",
             },
-            width: 90,
+            width: 90
         },
         {
             field: "enabled",
@@ -84,8 +83,8 @@ export default class Grid extends Vue {
             cellRenderer: "checkboxRenderer",
             cellStyle: { padding: "0", "padding-left": "10px" },
             resizable: false,
-            width: 45,
-        },
+            width: 45
+        }
     ];
     rowData: any[] = [];
 
@@ -97,7 +96,7 @@ export default class Grid extends Vue {
     }
 
     frameworkComponents = {
-        checkboxRenderer: CheckboxCellRenderer,
+        checkboxRenderer: CheckboxCellRenderer
     };
 
     rowStyle = { height: "30px" };
@@ -110,6 +109,8 @@ export default class Grid extends Vue {
 
     onGridReady(params) {
         this.gridApi = params.api;
+        window.addEventListener("resize", this.onWindowResize);
+        this.onWindowResize();
     }
 
     onRowClicked({ node }) {
@@ -120,9 +121,18 @@ export default class Grid extends Vue {
         this.gridApi.forEachNode((node) => {
             if (node.data.id === row.id) {
                 node.setSelected(true);
-                this.gridApi.ensureNodeVisible(node)
+                this.gridApi.ensureNodeVisible(node);
             }
         });
+    }
+
+    onWindowResize() {
+        if (window.innerWidth < 750) return;
+        this.gridApi.sizeColumnsToFit();
+    }
+
+    destroyed() {
+        window.removeEventListener("resize", this.onWindowResize);
     }
 
     private async getContracts() {
