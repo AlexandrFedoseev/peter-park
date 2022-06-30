@@ -19,8 +19,8 @@ export default class Header extends Vue {
     mounted() {
 
     }
-    onInput(e) {
-        this.$store.commit("search/setInput", e);
+    onInput(event: string) {
+        this.$store.commit("search/setInput", event);
     }
     debounceInput = debounce(this.onInput, 500);
 }

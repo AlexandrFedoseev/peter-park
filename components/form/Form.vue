@@ -2,7 +2,6 @@
 <template lang="pug" src="./form-template.pug" />
 <script lang="ts">
 import { Vue, Component, Emit } from "vue-property-decorator";
-import Input from "@/components/input/Input.vue";
 import { dateComparator } from "./form-utils";
 import { Contract } from "@/types/Contract.type";
 const LICENSE_PLATE_VALIDATOR = {
@@ -12,11 +11,7 @@ const LICENSE_PLATE_VALIDATOR = {
     France:  new RegExp("[A-Z]{2}\-[0-9]{3}\-[A-Z]{2}$")
 };
 
-@Component({
-    components: {
-        Input
-    }
-})
+@Component
 export default class Form extends Vue {
     $refs!: {
         form
