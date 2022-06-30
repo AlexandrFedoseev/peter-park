@@ -26,9 +26,7 @@ export function textMatcher({ filter, value, filterText }): boolean {
 
 export function dateComparator(filterLocalDateAtMidnight: Date, cellValue: string): -1 | 0 | 1 {
     const dateAsString = cellValue;
-    if (dateAsString == null) {
-        return 0;
-    }
+    if (dateAsString == null) return 0;
     // In the application, dates are stored as mm/dd/yyyy
     const dateParts = dateAsString.split("/");
     const day = Number(dateParts[1]);

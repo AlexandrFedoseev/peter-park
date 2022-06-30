@@ -1,6 +1,6 @@
 <template lang="pug">
 v-checkbox.in-grid-checkbox(
-        v-model="data"
+        v-model="data",
         @click="checkedHandler"
     )
 </template>
@@ -12,7 +12,7 @@ v-checkbox.in-grid-checkbox(
 </style>
 
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator"
+import { Vue, Component } from "vue-property-decorator";
 
 @Component
 export default class CheckboxCellRenderer extends Vue {
@@ -28,8 +28,7 @@ export default class CheckboxCellRenderer extends Vue {
 
     private async sendUpdate() {
         const { id, enabled } = this.params.data;
-        const data = await this.$http.$patch(`http://localhost:3001/contracts/${id}`, { enabled });
-        console.log("sendUpdate", data);
+        await this.$http.$patch(`http://localhost:3001/contracts/${id}`, { enabled });
     }
 }
 </script>

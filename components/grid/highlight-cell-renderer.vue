@@ -1,16 +1,16 @@
 <template lang="pug">
 div
-    span(v-if="isNoHighlight") {{data}}
+    span(v-if="isNoHighlight") {{ data }}
     template(v-if="!isNoHighlight")
         span(v-for="(item, index) in data")
-            span {{item}}
-            span.highlight-search(v-if="index < data.length - 1") {{searchString}}
+            span {{ item }}
+            span.highlight-search(v-if="index < data.length - 1") {{ searchString }}
 </template>
 
 <style lang="scss">
-    .highlight-search {
-        background-color: yellow;
-    } 
+.highlight-search {
+    background-color: yellow;
+}
 </style>
 
 <script lang="ts">
@@ -30,6 +30,10 @@ export default class HighlightCellRenderer extends Vue {
     params;
     data;
 
+    beforeMount() {
+        this.renderData();
+    }
+
     @Watch("searchString")
     renderData() {
         if (this.searchString === "") {
@@ -45,10 +49,6 @@ export default class HighlightCellRenderer extends Vue {
         }
         this.isNoHighlight = false;
         this.data = split;
-    }
-
-    beforeMount() {
-        this.renderData();
     }
 }
 </script>

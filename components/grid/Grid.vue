@@ -6,16 +6,16 @@
 import { Vue, Component, Watch } from "vue-property-decorator";
 import { mapGetters } from 'vuex';
 import { AgGridVue } from "ag-grid-vue";
+import { textMatcher, dateComparator } from "./grid-utils";
+import { GridApi, RowNode } from "ag-grid-community";
 import CheckboxCellRenderer from "./checkbox-cell-renderer.vue";
 import CountryCellRenderer from "./country-cell-renderer.vue";
 import HighlightCellRenderer from "./highlight-cell-renderer.vue";
-
-import { textMatcher, dateComparator } from "./grid-utils";
-import { GridApi } from "ag-grid-community";
+import { Contract } from "~/types/Contract.type";
 
 @Component({
     components: {
-        AgGridVue,
+        AgGridVue
     },
     computed: {
         ...mapGetters({
@@ -25,78 +25,54 @@ import { GridApi } from "ag-grid-community";
     }
 })
 export default class Grid extends Vue {
+    gridApi!: GridApi;
     searchString!: string;
     defaultColDef = {
         resizable: true,
+        sortable: true,
         suppressNavigable: true,
-        cellClass: 'no-border'
+        cellClass: 'no-border',
+        cellStyle: { "line-height": "30px" },
     };
 
     columnDefs = [
         {
             field: "licensePlate",
-            sortable: true,
             cellStyle: { "font-weight": "bold", "line-height": "30px" },
             filter: "agTextColumnFilter",
-            filterParams: {
-                textMatcher,
-            },
+            filterParams: { textMatcher },
             cellRenderer: "highlightRender"
         },
         {
             field: "country",
-            sortable: true,
             filter: "agTextColumnFilter",
             cellRenderer: "countryRenderer",
-            filterParams: {
-                textMatcher,
-            },
-            cellStyle: { "line-height": "30px" }
+            filterParams: { textMatcher }
         },
         {
             field: "owner",
-            sortable: true,
             filter: "agTextColumnFilter",
-            filterParams: {
-                textMatcher,
-            },
-            cellStyle: { "line-height": "30px" },
-            cellRenderer: "highlightRender"
+            cellRenderer: "highlightRender",
+            filterParams: { textMatcher }
         },
         {
             field: "startDate",
-            sortable: true,
             filter: "agDateColumnFilter",
-            filterParams: {
-                comparator: dateComparator,
-            },
-            cellStyle: { "line-height": "30px" }
+            filterParams: { comparator: dateComparator }
         },
         {
             field: "endDate",
-            sortable: true,
             filter: "agDateColumnFilter",
-            filterParams: {
-                comparator: dateComparator,
-            },
-            cellStyle: { "line-height": "30px" }
+            filterParams: { comparator: dateComparator }
         },
         {
             field: "enabled",
             cellRenderer: "checkboxRenderer",
             cellStyle: { padding: "0", "padding-left": "10px" },
-            sortable: true,
             width: 95
         }
     ];
-    rowData!: any[];
-
-    addData(row) {
-        this.$store.commit('contracts/add', row);
-        setTimeout(() => {
-            this.setRowSelected(row);
-        })
-    }
+    rowData!: Contract[];
 
     frameworkComponents = {
         checkboxRenderer: CheckboxCellRenderer,
@@ -110,8 +86,6 @@ export default class Grid extends Vue {
         this.getContracts();
     }
 
-    gridApi!: GridApi;
-
     onGridReady(params) {
         this.gridApi = params.api;
         window.addEventListener("resize", this.onWindowResize);
@@ -122,8 +96,8 @@ export default class Grid extends Vue {
         node.setSelected(true);
     }
 
-    setRowSelected(row) {
-        this.gridApi.forEachNode((node) => {
+    setRowSelected(row: Contract) {
+        this.gridApi.forEachNode((node: RowNode) => {
             if (node.data.id === row.id) {
                 node.setSelected(true);
                 this.gridApi.ensureNodeVisible(node);
@@ -131,15 +105,23 @@ export default class Grid extends Vue {
         });
     }
 
+    addData(row: Contract) {
+        this.$store.commit('contracts/add', row);
+        // Select Row on the next loop
+        setTimeout(() => {
+            this.setRowSelected(row);
+        });
+    }
+
     @Watch("searchString")
-    externalFilterChanged(newValue) {
+    externalFilterChanged(newValue: string) {
         this.gridApi.onFilterChanged();
     }
 
-    isExternalFilterPresent() {
+    isExternalFilterPresent(): boolean {
       return !!this.searchString;
     }
-    doesExternalFilterPass(node) {
+    doesExternalFilterPass(node: RowNode): boolean {
         return node.data.licensePlate.indexOf(this.searchString) != -1 ||
             node.data.owner.indexOf(this.searchString) != -1
     }
