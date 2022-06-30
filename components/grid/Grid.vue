@@ -6,6 +6,8 @@
 import { Vue, Component } from "vue-property-decorator";
 import { AgGridVue } from "ag-grid-vue";
 import CheckboxCellRenderer from "./checkbox-cell-renderer.vue";
+import CountryCellRenderer from "./country-cell-renderer.vue";
+
 import { textMatcher, dateComparator } from "./grid-utils";
 import { GridApi } from "ag-grid-community";
 
@@ -35,6 +37,7 @@ export default class Grid extends Vue {
             field: "country",
             sortable: true,
             filter: "agTextColumnFilter",
+            cellRenderer: "countryRenderer",
             filterParams: {
                 textMatcher,
             },
@@ -96,7 +99,8 @@ export default class Grid extends Vue {
     }
 
     frameworkComponents = {
-        checkboxRenderer: CheckboxCellRenderer
+        checkboxRenderer: CheckboxCellRenderer,
+        countryRenderer: CountryCellRenderer
     };
 
     rowStyle = { height: "30px" };
