@@ -11,23 +11,23 @@ v-container.form(fluid)
                 cols="12",
                 sm="2"
             )
-                v-text-field(
-                    label="License Plate",
-                    :rules="licensePlateRules",
-                    v-model="licensePlate",
-                    hide-details="auto"
-                )
-            v-col(
-                class="d-flex",
-                cols="12",
-                sm="2"
-            )
                 v-select(
                     :items="countriesList",
                     :rules="countryRules",
                     label="Country",
                     v-model="country"
                     @input="onCountryChange"
+                )
+            v-col(
+                class="d-flex",
+                cols="12",
+                sm="2"
+            )
+                v-text-field(
+                    label="License Plate",
+                    :rules="licensePlateRules",
+                    v-model="licensePlate",
+                    hide-details="auto"
                 )
             v-col(
                 class="d-flex",

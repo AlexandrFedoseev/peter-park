@@ -23,7 +23,7 @@ export default class Form extends Vue {
     isFormValid = true;
     isDatePicker = false;
     dates = [];
-    country = 'Germany';
+    country = "";
     countriesList = ['Germany', 'Switzerland', 'Austria', 'France'];
     countryRules = [
         this.validateRequired
@@ -38,6 +38,7 @@ export default class Form extends Vue {
     @Emit("new-contract")
     updateGrid(data) {
         this.$refs.form.reset();
+        this.dates = [];
         return data;
     }
 
@@ -63,7 +64,7 @@ export default class Form extends Vue {
     }
 
     validateLicensePlate(value: string): boolean | string {
-        if(!this.country) { return ""; }
+        if(!this.country) { return "Select the Country."; }
         return LICENSE_PLATE_VALIDATOR[this.country].test(value) || "License Plate is not Valid.";
     }
 

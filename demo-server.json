@@ -143,6 +143,69 @@
       "endDate": "09/02/2022",
       "enabled": true,
       "id": 17
+    },
+    {
+      "licensePlate": "HHO-E 2",
+      "country": "Germany",
+      "owner": "Julius Kuschke",
+      "startDate": "06/30/2022",
+      "endDate": "",
+      "enabled": true,
+      "id": 18
+    },
+    {
+      "licensePlate": "GR-7237",
+      "country": "Switzerland",
+      "owner": "Martin Gebske",
+      "startDate": "",
+      "endDate": "",
+      "enabled": true,
+      "id": 19
+    },
+    {
+      "licensePlate": "FR-876-AA",
+      "country": "France",
+      "owner": "Mateo Egey",
+      "startDate": "06/30/2022",
+      "endDate": "08/05/2022",
+      "enabled": true,
+      "id": 20
+    },
+    {
+      "licensePlate": "HH-43H",
+      "country": "Germany",
+      "owner": "Jan Frese",
+      "startDate": "07/01/2022",
+      "endDate": "07/29/2022",
+      "enabled": true,
+      "id": 21
+    },
+    {
+      "licensePlate": "DD-3",
+      "country": "Germany",
+      "owner": "Jan Oliver Eylander",
+      "startDate": "06/01/2022",
+      "endDate": "06/30/2022",
+      "enabled": true,
+      "id": 22
+    },
+    {
+      "licensePlate": "JJ-877H",
+      "country": "Germany",
+      "owner": "Jan-Erik Behrendt",
+      "startDate": "06/01/2022",
+      "endDate": "06/30/2022",
+      "enabled": true,
+      "id": 23
+    },
+    {
+      "licensePlate": "DD-23",
+      "country": "Switzerland",
+      "owner": "Rodrigo Pereira Montiro",
+      "startDate": "06/01/2022",
+      "endDate": "06/23/2022",
+      "enabled": true,
+      "id": 24
     }
   ]
 }

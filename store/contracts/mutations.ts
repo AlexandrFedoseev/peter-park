@@ -1,6 +1,6 @@
 export default {
     add(state, item) {
-        state.list.push(items)
+        state.list.push(item)
     },
     set(state, items) {
         state.list = [...items]
