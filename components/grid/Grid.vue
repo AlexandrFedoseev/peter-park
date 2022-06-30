@@ -102,8 +102,7 @@ export default class Grid extends Vue {
     }
 
     private async getContracts() {
-        const response = await fetch("http://localhost:3001/contracts");
-        this.rowData = await response.json();
+        this.rowData = await this.$http.$get("http://localhost:3001/contracts");
     }
 }
 </script>

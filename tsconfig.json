@@ -28,6 +28,7 @@
     },
     "types": [
       "@nuxt/types",
+      "@nuxt/http",
       "@types/node"
     ]
   },

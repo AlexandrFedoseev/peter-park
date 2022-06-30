@@ -36,7 +36,7 @@ export default class Form extends Vue {
     ownerName = "";
 
     @Emit("new-contract")
-    updateGridData(data) {
+    updateGrid(data) {
         this.resetFormData();
         return data;
     }
@@ -91,14 +91,8 @@ export default class Form extends Vue {
         return "";
     }
     private async addContract(contract) {
-        const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(contract)
-        };
-        fetch("http://localhost:3001/contracts", requestOptions)
-            .then(response => response.json())
-            .then(this.updateGridData);
+        const data = await this.$http.$post("http://localhost:3001/contracts", contract);
+        this.updateGrid(data);
     }
 
     private resetFormData() {

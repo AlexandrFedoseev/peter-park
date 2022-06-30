@@ -11,20 +11,25 @@ v-checkbox.in-grid-checkbox(
 }
 </style>
 
-
-
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator"
 
 @Component
 export default class CheckboxCellRenderer extends Vue {
-    public params
-    public data
+    params;
+    data;
     beforeMount() {
-        this.data = this.params.value
+        this.data = this.params.value;
     }
-    public checkedHandler(event) {
-        this.params.setValue(this.data)
+    checkedHandler() {
+        this.params.setValue(this.data);
+        this.sendUpdate();
+    }
+
+    private async sendUpdate() {
+        const { id, enabled } = this.params.data;
+        const data = await this.$http.$patch(`http://localhost:3001/contracts/${id}`, { enabled });
+        console.log("sendUpdate", data);
     }
 }
 </script>

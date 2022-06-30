@@ -16,7 +16,7 @@
       "owner": "Carsten Schroeder",
       "startDate": "04/05/2022",
       "endDate": "06/30/2022",
-      "enabled": true
+      "enabled": false
     },
     {
       "id": 3,
@@ -26,15 +26,6 @@
       "startDate": "06/29/2022",
       "endDate": "07/01/2022",
       "enabled": true
-    },
-    {
-      "licensePlate": "AA-123-XS",
-      "country": "France",
-      "owner": "Daniela Borkowski",
-      "startDate": "06/30/2022",
-      "endDate": "07/07/2022",
-      "enabled": true,
-      "id": 4
     },
     {
       "licensePlate": "AA-333-QW",
