@@ -3,10 +3,12 @@
 <style lang="scss" src="./grid-styles.scss"></style>
 <template lang="pug" src="./grid-template.pug" />
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
+import { mapGetters } from 'vuex';
 import { AgGridVue } from "ag-grid-vue";
 import CheckboxCellRenderer from "./checkbox-cell-renderer.vue";
 import CountryCellRenderer from "./country-cell-renderer.vue";
+import HighlightCellRenderer from "./highlight-cell-renderer.vue";
 
 import { textMatcher, dateComparator } from "./grid-utils";
 import { GridApi } from "ag-grid-community";
@@ -15,8 +17,15 @@ import { GridApi } from "ag-grid-community";
     components: {
         AgGridVue,
     },
+    computed: {
+        ...mapGetters({
+            rowData: "contracts/getContracts",
+            searchString: "search/getInput"
+        })
+    }
 })
 export default class Grid extends Vue {
+    searchString!: string;
     defaultColDef = {
         resizable: true,
         suppressNavigable: true,
@@ -31,7 +40,8 @@ export default class Grid extends Vue {
             filter: "agTextColumnFilter",
             filterParams: {
                 textMatcher,
-            }
+            },
+            cellRenderer: "highlightRender"
         },
         {
             field: "country",
@@ -50,7 +60,8 @@ export default class Grid extends Vue {
             filterParams: {
                 textMatcher,
             },
-            cellStyle: { "line-height": "30px" }
+            cellStyle: { "line-height": "30px" },
+            cellRenderer: "highlightRender"
         },
         {
             field: "startDate",
@@ -77,10 +88,10 @@ export default class Grid extends Vue {
             sortable: true
         }
     ];
-    rowData: any[] = [];
+    rowData!: any[];
 
     addData(row) {
-        this.rowData.push(row);
+        this.$store.commit('contracts/add', row);
         setTimeout(() => {
             this.setRowSelected(row);
         })
@@ -88,7 +99,8 @@ export default class Grid extends Vue {
 
     frameworkComponents = {
         checkboxRenderer: CheckboxCellRenderer,
-        countryRenderer: CountryCellRenderer
+        countryRenderer: CountryCellRenderer,
+        highlightRender: HighlightCellRenderer
     };
 
     rowStyle = { height: "30px" };
@@ -118,6 +130,19 @@ export default class Grid extends Vue {
         });
     }
 
+    @Watch("searchString")
+    externalFilterChanged(newValue) {
+        this.gridApi.onFilterChanged();
+    }
+
+    isExternalFilterPresent() {
+      return !!this.searchString;
+    }
+    doesExternalFilterPass(node) {
+        return node.data.licensePlate.indexOf(this.searchString) != -1 ||
+            node.data.owner.indexOf(this.searchString) != -1
+    }
+
     onWindowResize() {
         if (window.innerWidth < 750) return;
         this.gridApi.sizeColumnsToFit();
@@ -128,7 +153,8 @@ export default class Grid extends Vue {
     }
 
     private async getContracts() {
-        this.rowData = await this.$http.$get("http://localhost:3001/contracts");
+        const data = await this.$http.$get("http://localhost:3001/contracts");
+        this.$store.commit('contracts/set', data);
     }
 }
 </script>

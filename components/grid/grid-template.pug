@@ -6,6 +6,8 @@ v-container.grid(fluid)
         :columnDefs="columnDefs"
         :rowData="rowData"
         :frameworkComponents="frameworkComponents"
+        :isExternalFilterPresent="isExternalFilterPresent"
+        :doesExternalFilterPass="doesExternalFilterPass"
         :defaultColDef="defaultColDef"
         @grid-ready="onGridReady"
         @row-clicked="onRowClicked"

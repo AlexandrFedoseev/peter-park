@@ -22,7 +22,7 @@ export default class CheckboxCellRenderer extends Vue {
         this.data = this.params.value;
     }
     checkedHandler() {
-        this.params.setValue(this.data);
+        this.$store.commit('contracts/toggle', this.params.data);
         this.sendUpdate();
     }
 

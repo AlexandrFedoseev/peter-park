@@ -20,7 +20,7 @@ export default class ClassAPICounter extends Vue {
         grid: Grid
     }
     mounted() {
-        console.log("App Start")
+        console.log("App Start", this.$store.getters.getCount)
     }
 
     onNewContract(data) {

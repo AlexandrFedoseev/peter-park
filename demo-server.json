@@ -7,7 +7,7 @@
       "owner": "Nico Probst",
       "startDate": "03/03/2022",
       "endDate": "09/12/2022",
-      "enabled": true
+      "enabled": false
     },
     {
       "id": 1,
@@ -25,7 +25,7 @@
       "owner": "Jonas Frenz",
       "startDate": "06/29/2022",
       "endDate": "07/01/2022",
-      "enabled": true
+      "enabled": false
     },
     {
       "licensePlate": "AA-333-QW",
