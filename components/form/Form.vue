@@ -1,14 +1,14 @@
 <style lang="scss" src="./form-styles.scss" />
 <template lang="pug" src="./form-template.pug" />
 <script lang="ts">
+import { Vue, Component, Emit } from "vue-property-decorator";
+import Input from "@/components/input/Input.vue";
 const LICENSE_PLATE_VALIDATOR = {
     Germany: new RegExp("[A-ZÄÖÜ]{1,3}\-[A-Z]{0,2}[ ]{0,1}[0-9]{1,4}[0-9]{0}[H]{0,1}$"),
     Switzerland: new RegExp("[A-Z]{1,3}\-[0-9]{1,6}$"),
     Austria: new RegExp("[A-Z]{1,2}\-[0-9]{3,6}$"),
     France:  new RegExp("[A-Z]{2}\-[0-9]{3}\-[A-Z]{2}$")
-}
-import { Vue, Component, Emit } from 'vue-property-decorator'
-import Input from "@/components/input/Input.vue"
+};
 
 @Component({
     components: {
@@ -21,24 +21,37 @@ export default class Form extends Vue {
     };
 
     isFormValid = true;
+    isDatePicker = false;
     dates = [];
     country = 'Germany';
+    countriesList = ['Germany', 'Switzerland', 'Austria', 'France'];
+    countryRules = [
+        this.validateRequired
+    ];
     licensePlate = "";
+    licensePlateRules = [
+        this.validateRequired,
+        this.validateLicensePlate
+    ];
     ownerName = "";
+
+    @Emit("new-contract")
+    updateGridData(data) {
+        this.resetFormData();
+        return data;
+    }
 
     onCountryChange() {
         this.$refs.form.validate();
     }
 
-    cancelDatePicker() {
-        this.dates = []
-        this.isDatePicker = false
+    onDatePickerCancel() {
+        this.dates = [];
+        this.isDatePicker = false;
     }
 
     sendData() {
-        if (!this.$refs.form.validate()) {
-            return;
-        }
+        if (!this.$refs.form.validate()) return;
         this.addContract({
             licensePlate: this.licensePlate,
             country: this.country,
@@ -49,56 +62,34 @@ export default class Form extends Vue {
         });
     }
 
-    public onDateBlur(event) {
-        console.log("on Blur", event.target._value)
-        //this.dates = this.dateRangeValues(this.dateFormatted)
+    validateLicensePlate(value: string): boolean | string {
+        return LICENSE_PLATE_VALIDATOR[this.country].test(value) || "License Plate is not Valid.";
     }
 
-    public validateLicensePlate(value: string): boolean | string {
-        console.log(this.country)
-        return LICENSE_PLATE_VALIDATOR[this.country].test(value) || 'License Plate is not Valid.'
+    validateRequired(value: string): boolean | string {
+        return !!value || "Required.";
     }
 
-    public validateRequired(value: string): boolean | string {
-        return !!value || 'Required.'
+    formatDate(date: string): string | null {
+        if (!date) return null;
+        const [year, month, day] = date.split('-');
+        return `${month}/${day}/${year}`;
     }
 
-    public licensePlateRules = [
-        this.validateRequired,
-        this.validateLicensePlate
-    ]
-    public required = [
-        this.validateRequired
-    ]
-
-    public countriesList = [
-        'Germany', 'Switzerland', 'Austria', 'France'
-    ]
-
-    public isDatePicker = false
-
-    public formatDate(date: string): string | null {
-        if (!date) return null
-
-        const [year, month, day] = date.split('-')
-        return `${month}/${day}/${year}`
-    }
-    public parseDate(date: string | null): string | null {
-        if (!date) return null
-        const [month, day, year] = date.split('/')
-        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    parseDate(date: string | null): string | null {
+        if (!date) return null;
+        const [month, day, year] = date.split('/');
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
 
-    public get dateRangeText(): string {
-        return this.dates.map(this.formatDate).join(' ~ ')
+    get dateRangeText(): string {
+        return this.dates.map(this.formatDate).join(' ~ ');
     }
 
-    public dateRangeValues(str: string): string {
+    dateRangeValues(str: string): string {
         // dateRangeValues getter
-        return ""
+        return "";
     }
-
-    public dateFormatted = this.formatDate((new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10))
     private async addContract(contract) {
         const requestOptions = {
             method: "POST",
@@ -107,13 +98,15 @@ export default class Form extends Vue {
         };
         fetch("http://localhost:3001/contracts", requestOptions)
             .then(response => response.json())
-            .then(this.updateData);
+            .then(this.updateGridData);
     }
 
-    @Emit("new-contract")
-    updateData(data) {
-        console.log("POST", data)
-        return data
+    private resetFormData() {
+        this.isFormValid = true;
+        this.dates = [];
+        this.country = 'Germany';
+        this.licensePlate = "";
+        this.ownerName = "";
     }
 }
 </script>

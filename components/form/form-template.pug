@@ -24,7 +24,7 @@ v-container.form(fluid)
             )
                 v-select(
                     :items="countriesList",
-                    :rules="required",
+                    :rules="countryRules",
                     label="Country",
                     v-model="country"
                     @input="onCountryChange"
@@ -75,7 +75,7 @@ v-container.form(fluid)
                             depressed,
                             large,
                             color="deep-orange",
-                            @click="cancelDatePicker(), isDatePicker = false, dates = []"
+                            @click="onDatePickerCancel(), isDatePicker = false, dates = []"
                         ) Cancel
             v-col(
                 class="d-flex",
