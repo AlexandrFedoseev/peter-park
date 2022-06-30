@@ -33,7 +33,7 @@ export default class Grid extends Vue {
         suppressNavigable: true,
         cellClass: 'no-border',
         cellStyle: { "line-height": "30px" },
-    };
+    }
 
     columnDefs = [
         {
@@ -78,9 +78,9 @@ export default class Grid extends Vue {
         checkboxRenderer: CheckboxCellRenderer,
         countryRenderer: CountryCellRenderer,
         highlightRender: HighlightCellRenderer
-    };
+    }
 
-    rowStyle = { height: "30px" };
+    rowStyle = { height: "30px" }
 
     mounted() {
         this.getContracts();

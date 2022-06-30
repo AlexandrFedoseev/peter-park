@@ -9,13 +9,13 @@ const LICENSE_PLATE_VALIDATOR = {
     Switzerland: new RegExp("[A-Z]{1,3}\-[0-9]{1,6}$"),
     Austria: new RegExp("[A-Z]{1,2}\-[0-9]{3,6}$"),
     France:  new RegExp("[A-Z]{2}\-[0-9]{3}\-[A-Z]{2}$")
-};
+}
 
 @Component
 export default class Form extends Vue {
     $refs!: {
         form
-    };
+    }
 
     isFormValid = true;
     isDatePicker = false;
