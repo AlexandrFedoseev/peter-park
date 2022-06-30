@@ -1,13 +1,13 @@
 export const state = () => ({
-    count: 0
+  count: 0
 })
 
 export const getters = {
-    getCount: state => state.count,
-  }
+  getCount: state => state.count
+}
 
 export const mutations = {
-    increment(state) {
-        state.count++
-    }
+  increment (state) {
+    state.count++
+  }
 }

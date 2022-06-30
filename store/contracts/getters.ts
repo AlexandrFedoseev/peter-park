@@ -1,5 +1,5 @@
 export default {
-    getContracts(state) {
-        return state.list
-    }
+  getContracts (state) {
+    return state.list
+  }
 }

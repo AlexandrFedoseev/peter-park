@@ -1,15 +1,15 @@
 export const state = () => ({
-    search: ""
+  search: ''
 })
 
 export const mutations = {
-    setInput(state, str) {
-        state.search = str
-    }
+  setInput (state, str) {
+    state.search = str
+  }
 }
 
 export const getters = {
-    getInput(state) {
-        return state.search
-    }
+  getInput (state) {
+    return state.search
+  }
 }
