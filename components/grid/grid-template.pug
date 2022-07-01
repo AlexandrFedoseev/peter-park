@@ -1,0 +1,15 @@
+v-container.grid(fluid)
+    .grid__wrapper
+        ag-grid-vue.grid__wrap(
+            class="ag-theme-alpine",
+            suppressCellFocus,
+            :rowHeight="35",
+            :columnDefs="columnDefs",
+            :rowData="rowData",
+            :frameworkComponents="frameworkComponents",
+            :isExternalFilterPresent="isExternalFilterPresent",
+            :doesExternalFilterPass="doesExternalFilterPass",
+            :defaultColDef="defaultColDef",
+            @grid-ready="onGridReady",
+            @row-clicked="onRowClicked"
+        )

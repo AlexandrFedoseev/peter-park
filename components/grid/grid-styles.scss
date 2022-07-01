@@ -1,0 +1,20 @@
+.grid {
+    flex: 1;
+    .grid__wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .ag-center-cols-viewport {
+        overflow: hidden;
+    }
+    &__wrap {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    .no-border.ag-cell:focus {
+        border-color: transparent !important;
+        outline-color: transparent !important;
+    }
+}

@@ -1,0 +1,25 @@
+.app-header
+    v-app-bar(
+        color="deep-purple accent-4",
+        dense,
+        dark
+    )
+        v-toolbar-title Parking Manager Dashboard
+        v-spacer
+        v-text-field.search-input(
+            :value="searchString",
+            solo,
+            color="white",
+            clearable,
+            rounded,
+            dense,
+            light,
+            label="Search License Plate",
+            type="text",
+            @input="debounceInput"
+        )
+            template(v-slot:append)
+                v-icon mdi-magnify
+
+
+        
